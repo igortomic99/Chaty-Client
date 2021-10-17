@@ -182,7 +182,6 @@ export type Query = {
   findUser: User;
   followers: Array<User>;
   followings: Array<User>;
-  hello: Scalars['String'];
   me: User;
   messagesInConversation: Array<Message>;
   participants: Conversation;
@@ -235,9 +234,7 @@ export type QueryProfileFromIdArgs = {
 
 export type Subscription = {
   __typename?: 'Subscription';
-  followExecuted: Scalars['Boolean'];
   messageSent: Message;
-  unfollowExecuted: Scalars['Boolean'];
 };
 
 export type User = {
@@ -407,7 +404,7 @@ export type VoteMutation = { __typename?: 'Mutation', vote: boolean };
 export type ActiveConversationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ActiveConversationsQuery = { __typename?: 'Query', activeConversations: Array<{ __typename?: 'Conversation', id: string, participants: Array<{ __typename?: 'UsersInConversations', user?: Maybe<{ __typename?: 'User', id: string, username: string }> }> }> };
+export type ActiveConversationsQuery = { __typename?: 'Query', activeConversations: Array<{ __typename?: 'Conversation', id: string, messages?: Maybe<Array<{ __typename?: 'Message', id: number, read: boolean }>>, participants: Array<{ __typename?: 'UsersInConversations', user?: Maybe<{ __typename?: 'User', id: string, username: string }> }> }> };
 
 export type ArgumentedPostQueryVariables = Exact<{
   numberPosts: Scalars['Float'];
@@ -476,20 +473,10 @@ export type ProfileFromIdQueryVariables = Exact<{
 
 export type ProfileFromIdQuery = { __typename?: 'Query', profileFromId: { __typename?: 'Profile', id: string, bio: string, user: { __typename?: 'User', username: string, id: string, email: string, _count?: Maybe<{ __typename?: 'UserCount', posts: number, followedBy: number, following: number }>, posts: Array<{ __typename?: 'Post', id: string, createdAt: any, title: string, content?: Maybe<string>, voteStatus?: Maybe<number>, points: number, author: { __typename?: 'User', id: string, username: string } }> } } };
 
-export type FollowExecutedSubscriptionVariables = Exact<{ [key: string]: never; }>;
-
-
-export type FollowExecutedSubscription = { __typename?: 'Subscription', followExecuted: boolean };
-
 export type MessageSentSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MessageSentSubscription = { __typename?: 'Subscription', messageSent: { __typename: 'Message', id: number, text: string, createdAt: any, userId: string, author: { __typename: 'User', id: string, username: string } } };
-
-export type UnfollowExecutedSubscriptionVariables = Exact<{ [key: string]: never; }>;
-
-
-export type UnfollowExecutedSubscription = { __typename?: 'Subscription', unfollowExecuted: boolean };
+export type MessageSentSubscription = { __typename?: 'Subscription', messageSent: { __typename: 'Message', id: number, text: string, createdAt: any, userId: string, read: boolean, author: { __typename: 'User', id: string, username: string } } };
 
 export const PostSnippetFragmentDoc = gql`
     fragment PostSnippet on Post {
@@ -729,6 +716,10 @@ export const ActiveConversationsDocument = gql`
     query ActiveConversations {
   activeConversations {
     id
+    messages {
+      id
+      read
+    }
     participants {
       user {
         id
@@ -962,15 +953,6 @@ export const ProfileFromIdDocument = gql`
 export function useProfileFromIdQuery(options: Omit<Urql.UseQueryArgs<ProfileFromIdQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<ProfileFromIdQuery>({ query: ProfileFromIdDocument, ...options });
 };
-export const FollowExecutedDocument = gql`
-    subscription FollowExecuted {
-  followExecuted
-}
-    `;
-
-export function useFollowExecutedSubscription<TData = FollowExecutedSubscription>(options: Omit<Urql.UseSubscriptionArgs<FollowExecutedSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandler<FollowExecutedSubscription, TData>) {
-  return Urql.useSubscription<FollowExecutedSubscription, TData, FollowExecutedSubscriptionVariables>({ query: FollowExecutedDocument, ...options }, handler);
-};
 export const MessageSentDocument = gql`
     subscription MessageSent {
   messageSent {
@@ -979,6 +961,7 @@ export const MessageSentDocument = gql`
     text
     createdAt
     userId
+    read
     author {
       __typename
       id
@@ -990,13 +973,4 @@ export const MessageSentDocument = gql`
 
 export function useMessageSentSubscription<TData = MessageSentSubscription>(options: Omit<Urql.UseSubscriptionArgs<MessageSentSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandler<MessageSentSubscription, TData>) {
   return Urql.useSubscription<MessageSentSubscription, TData, MessageSentSubscriptionVariables>({ query: MessageSentDocument, ...options }, handler);
-};
-export const UnfollowExecutedDocument = gql`
-    subscription UnfollowExecuted {
-  unfollowExecuted
-}
-    `;
-
-export function useUnfollowExecutedSubscription<TData = UnfollowExecutedSubscription>(options: Omit<Urql.UseSubscriptionArgs<UnfollowExecutedSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandler<UnfollowExecutedSubscription, TData>) {
-  return Urql.useSubscription<UnfollowExecutedSubscription, TData, UnfollowExecutedSubscriptionVariables>({ query: UnfollowExecutedDocument, ...options }, handler);
 };

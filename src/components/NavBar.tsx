@@ -16,18 +16,31 @@ import {
   useColorMode,
   useColorModeValue,
   useDisclosure,
-  VStack,
+  VStack
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { FiBell, FiChevronDown } from "react-icons/fi";
-import { useLogoutMutation, useMeQuery } from "../generated/graphql";
+import {
+  useActiveConversationsQuery,
+  useLogoutMutation,
+  useMeQuery
+} from "../generated/graphql";
 
 export const NavBar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [{ fetching: LogoutFetching }, logout] = useLogoutMutation();
   const router = useRouter();
+  const [{ data: conv }] = useActiveConversationsQuery();
+  let notification = true;
+  conv?.activeConversations?.map((c) => {
+    c.messages.map((m) => {
+      if (m.read === false) {
+        notification = false;
+      }
+    });
+  });
   const [{ data, fetching }] = useMeQuery();
   const { colorMode, toggleColorMode } = useColorMode();
   let body = null;
@@ -146,6 +159,7 @@ export const NavBar = () => {
                 variant="ghost"
                 aria-label="notification"
                 icon={<FiBell />}
+                bgColor={!notification ? "red.500" : null}
                 mr={2}
               />
             </HStack>

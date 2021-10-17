@@ -5,6 +5,7 @@ subscription MessageSent{
     text
     createdAt
     userId
+    read
     author{
       __typename
       id
