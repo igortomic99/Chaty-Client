@@ -29,7 +29,7 @@ const Conversations = () => {
               } else {
                 return (
                   <>
-                    <Flex mt={100}>
+                    <Flex key={c.id} mt={100}>
                       <Box ml={100}>
                         <Link>
                           <NextLink href="/chat/[id]" as={`chat/${c.id}`}>
@@ -58,7 +58,7 @@ const Conversations = () => {
                                 <Flex>
                                   {c.participants.map((p) => {
                                     return (
-                                      <Box>
+                                      <Box key={p.user.id}>
                                         <Text
                                           fontSize="lg"
                                           fontFamily="monospace"

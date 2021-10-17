@@ -115,6 +115,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
       cacheExchange({
         keys: {
           PaginatedPosts: () => null,
+          UsersInConversations: () => null
         },
         resolvers: {
           Query: {
@@ -214,7 +215,7 @@ export const createUrqlClient = (ssrExchange: any, ctx: any) => {
           },
         },
       }),
-      //errorExchange,
+      errorExchange,
       ssrExchange,
       fetchExchange,
     ],

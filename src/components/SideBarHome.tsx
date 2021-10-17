@@ -120,7 +120,7 @@ export const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         ) : (
           followers.followers.map((f) =>
             !f ? null : (
-              <Flex>
+              <Flex key={f.id}>
                 <Avatar
                   src={"https://avatars0.githubusercontent.com/u/1164541?v=4"}
                   alt={"Author"}

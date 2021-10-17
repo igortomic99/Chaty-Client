@@ -20,8 +20,8 @@ import { useArgumentedPostQuery } from "../generated/graphql";
 import { createUrqlClient } from "../utils/createUrqlClient";
 
 const Home = ({ children }: { children: ReactNode }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [number, setNumber] = useState(10);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [{ data, fetching, error }] = useArgumentedPostQuery({
     variables: {
       numberPosts: number,
@@ -88,7 +88,7 @@ const Home = ({ children }: { children: ReactNode }) => {
                         return null;
                       } else {
                         return (
-                          <Center py={2}>
+                          <Center py={2} key={p.id}>
                             <Box
                               maxW={"800px"}
                               w={"full"}
