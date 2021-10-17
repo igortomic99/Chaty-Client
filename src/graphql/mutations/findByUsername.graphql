@@ -1,0 +1,11 @@
+mutation FindByUsername($username: String!) {
+  findByUsername(username: $username) {
+    id
+    bio
+    user {
+      id
+      email
+      username
+    }
+  }
+}

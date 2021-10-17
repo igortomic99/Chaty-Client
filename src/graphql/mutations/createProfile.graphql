@@ -1,0 +1,11 @@
+mutation CreateProfile($bio:String!){
+  createProfile(bio:$bio){
+    id
+    bio
+    user{
+      id
+      email
+      username
+    }
+  }
+}

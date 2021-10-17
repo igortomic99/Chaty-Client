@@ -1,0 +1,13 @@
+query ConversationFromId($id: String!) {
+  conversationFromId(id: $id) {
+    messages {
+      id
+      text
+      createdAt
+      author {
+        id
+        username
+      }
+    }
+  }
+}

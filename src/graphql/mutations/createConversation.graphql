@@ -1,0 +1,6 @@
+mutation CreateConversation{
+  createConversation{
+    id
+    createdAt
+  }
+}

@@ -1,0 +1,6 @@
+query Followings{
+  followings{
+    id
+    username
+  }
+}

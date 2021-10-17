@@ -1,0 +1,17 @@
+query Posts {
+  posts {
+    posts {
+      id
+      createdAt
+      title
+      voteStatus
+      points
+      content
+      author {
+        id
+        username
+      }
+    }
+    hasMore
+  }
+}

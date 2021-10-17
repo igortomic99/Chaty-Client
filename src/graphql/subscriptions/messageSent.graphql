@@ -1,0 +1,14 @@
+subscription MessageSent{
+  messageSent{
+    __typename
+    id
+    text
+    createdAt
+    userId
+    author{
+      __typename
+      id
+      username
+    }
+  }
+}

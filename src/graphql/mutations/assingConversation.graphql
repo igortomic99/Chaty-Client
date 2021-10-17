@@ -1,0 +1,6 @@
+mutation AssingConversation($id: String!) {
+  assingConversation(id: $id) {
+    conversationId
+    userId
+  }
+}

@@ -1,0 +1,11 @@
+query ActiveConversations {
+  activeConversations {
+    id
+    participants{
+      user{
+        id
+        username
+      }
+    }
+  }
+}

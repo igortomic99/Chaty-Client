@@ -1,0 +1,6 @@
+query Followers{
+  followers{
+    id
+    username
+  }
+}

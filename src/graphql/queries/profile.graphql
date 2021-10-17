@@ -1,0 +1,27 @@
+query Profile {
+  profile {
+    id
+    bio
+    user {
+      username
+      email
+      _count {
+        posts
+        followedBy
+        following
+      }
+      posts {
+        id
+        title
+        createdAt
+        content
+        points
+        voteStatus
+        author {
+          id
+          username
+        }
+      }
+    }
+  }
+}

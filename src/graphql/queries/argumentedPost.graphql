@@ -1,0 +1,17 @@
+query argumentedPost($numberPosts:Float!){
+  argumentedPost(numberPosts:$numberPosts) {
+    posts {
+      id
+      createdAt
+      title
+      voteStatus
+      points
+      content
+      author {
+        id
+        username
+      }
+    }
+    hasMore
+  }
+}

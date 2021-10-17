@@ -1,0 +1,10 @@
+query ParticipantsFromConversationId($id: [String!]!) {
+  participantsFromConversationId(id: $id) {
+    participants {
+      userId
+      user {
+        username
+      }
+    }
+  }
+}

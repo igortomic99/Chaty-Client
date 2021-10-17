@@ -1,0 +1,28 @@
+query ProfileFromId($id: String!) {
+  profileFromId(id: $id) {
+    id
+    bio
+    user {
+      username
+      id
+      email
+      _count {
+        posts
+        followedBy
+        following
+      }
+      posts {
+        id
+        createdAt
+        title
+        content
+        voteStatus
+        points
+        author {
+          id
+          username
+        }
+      }
+    }
+  }
+}
